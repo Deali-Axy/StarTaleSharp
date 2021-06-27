@@ -1,6 +1,6 @@
 using System;
 
-namespace StarTale.Models {
+namespace StarTale.ViewModels {
     public class ErrorViewModel {
         public string RequestId { get; set; }
 

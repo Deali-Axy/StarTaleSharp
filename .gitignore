@@ -1,5 +1,9 @@
+.vs
+.idea
+*.db
 bin/
 obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
+StarTale/wwwroot/lib/node_modules

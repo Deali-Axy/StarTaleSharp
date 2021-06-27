@@ -1,0 +1,6 @@
+{
+  "requires": true,
+  "dependencies": {
+    "layui-src": "^2.5.5"
+  }
+}

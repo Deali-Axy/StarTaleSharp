@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Hangfire;
+using Hangfire.Storage.SQLite;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -19,6 +21,16 @@ namespace StarTale {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
+            services.AddHangfire(conf => conf
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseStorage(new SQLiteStorage(
+                    Configuration.GetConnectionString("Hangfire"),
+                    new SQLiteStorageOptions())
+                ));
+            services.AddHangfireServer();
+
             services.AddControllersWithViews()
                 // 添加Razor页面运行时动态编译支持
                 .AddRazorRuntimeCompilation();
@@ -41,6 +53,8 @@ namespace StarTale {
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseHangfireDashboard();
 
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllerRoute(
